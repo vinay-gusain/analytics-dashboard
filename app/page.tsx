@@ -1,103 +1,124 @@
-import Image from "next/image";
+// File: app/page.tsx
+"use client";
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Sidebar from '../components/Sidebar';
+import MobileNavigation from '../components/MobileNavigation';
+import AccountProgress from '../components/AccountProgress';
+import FranchiseesOnboard from '../components/FranchiseesOnboard';
+import KeyInsights from '../components/KeyInsights';
+import FinancialWellbeing from '../components/FinancialWellbeing';
+import ProspectLeads from '../components/ProspectLeads';
+import PendingQuestions from '../components/PendingQuestions';
+import ChatAssistant from '../components/ChatAssistant';
+import useMediaQuery from '../hooks/useMediaQuery';
 
-export default function Home() {
+export default function Dashboard() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const isMobile = useMediaQuery('(max-width: 767px)');
+  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1023px)');
+  
+  // Simulate page loading and improve perceived performance
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+  
+  if (!isLoaded) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-900"></div>
+      </div>
+    );
+  }
+  
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Sidebar - hide on mobile and tablet */}
+      {!isMobile && !isTablet && <Sidebar />}
+      
+      {/* Main Content */}
+      <div className="flex-1 overflow-y-auto">
+        {/* Mobile/Tablet header with burger menu */}
+        {(isMobile || isTablet) && (
+          <div className="sticky top-0 z-10 bg-teal-900 text-white p-4 flex items-center">
+            <MobileNavigation />
+            <h1 className="text-lg font-medium ml-3">Franchise Dashboard</h1>
+            <div className="ml-auto">
+              <Image 
+                src="/placeholder/man.png" 
+                alt="User profile" 
+                width={32} 
+                height={32}
+                className="rounded-full"
+              />
+            </div>
+          </div>
+        )}
+        
+        {/* Desktop header */}
+        {!isMobile && !isTablet && (
+          <div className="flex justify-end p-4">
+            <button className="p-2 rounded-full hover:bg-gray-100">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </button>
+            <div className="w-10 h-10 rounded-full overflow-hidden ml-4">
+              <Image 
+                src="/placeholder/man.png" 
+                alt="User profile" 
+                width={40} 
+                height={40}
+                className="object-cover"
+              />
+            </div>
+          </div>
+        )}
+        
+        {/* Dashboard Content */}
+        <div className="p-4 md:p-6">
+          {/* Top Section: 30% vertical rectangle + 4 square components (35% each, 2x2 grid) */}
+          <div className="flex flex-col lg:flex-row gap-6 mb-6">
+            {/* First component - vertical rectangle (30% width, full height) */}
+            <div className="w-full lg:w-3/10 bg-white rounded-lg shadow p-4 md:p-6">
+              <AccountProgress />
+            </div>
+            
+            {/* Four square components (35% width each, arranged in 2x2 grid) */}
+            <div className="w-full lg:w-7/10 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Top row */}
+              <div className="bg-white rounded-lg shadow p-4 md:p-6">
+                <FranchiseesOnboard />
+              </div>
+              <div className="bg-white rounded-lg shadow p-4 md:p-6">
+                <KeyInsights />
+              </div>
+              
+              {/* Bottom row */}
+              <div className="bg-white rounded-lg shadow p-4 md:p-6">
+                <FinancialWellbeing />
+              </div>
+              <div className="bg-white rounded-lg shadow p-4 md:p-6">
+                <ProspectLeads />
+              </div>
+            </div>
+          </div>
+          
+          {/* Bottom Section: 40% / 60% split for last two components */}
+          <div className="flex flex-col lg:flex-row gap-6 animate-slideUp">
+            {/* PendingQuestions (40% width) */}
+            <div className="w-full lg:w-2/5 bg-white rounded-lg shadow">
+              <PendingQuestions />
+            </div>
+            
+            {/* ChatAssistant (60% width) */}
+            <div className="w-full lg:w-3/5 bg-white rounded-lg shadow p-4 md:p-6">
+              <ChatAssistant />
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
